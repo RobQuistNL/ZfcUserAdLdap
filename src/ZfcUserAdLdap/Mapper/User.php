@@ -94,6 +94,9 @@ class User extends ZfcUserMapper
             
             $this->entity->setId($auth[0]['objectsid'][0]);
             $this->entity->setUsername($auth[0]['samaccountname'][0]);
+            
+            $this->entity->setPhoneNumber($auth[0]['telephonenumber'][0]);
+            
             return $this; 
        } else {
            return false;

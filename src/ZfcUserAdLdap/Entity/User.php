@@ -12,5 +12,30 @@ namespace ZfcUserAdLdap\Entity;
 use ZfcUser\Entity\User as ZfcUserEntity;
 
 class User extends ZfcUserEntity {
-
+	/**
+	 * @var string
+	 */
+	protected $phoneNumber;
+	
+	/**
+	 * Get phone number.
+	 *
+	 * @return string
+	 */
+	public function getPhoneNumber()
+	{
+		return $this->phoneNumber;
+	}
+	
+	/**
+	 * Set phone number.
+	 *
+	 * @param string $phoneNumber
+	 * @return UserInterface
+	 */
+	public function setPhoneNumber($phoneNumber)
+	{
+		$this->phoneNumber = $phoneNumber;
+		return $this;
+	}
 }
