@@ -87,7 +87,7 @@ class User extends ZfcUserMapper
             if (isset($auth[0]['mail'][0])) {
                 $mail_exp = explode('.', $auth[0]['mail'][0]);
             } else {
-                $mail_exp[0] = 'enrise';
+                $mail_exp[0] = 'trendshift';
                 $mail_exp[1] = 'com';
             }
             $this->entity->setEmail($auth[0]['samaccountname'][0] . '@' . $mail_exp[count($mail_exp)-2] . '.' . $mail_exp[count($mail_exp)-1]);
@@ -95,7 +95,7 @@ class User extends ZfcUserMapper
             $this->entity->setId($auth[0]['objectsid'][0]);
             $this->entity->setUsername($auth[0]['samaccountname'][0]);
             
-            $this->entity->setPhoneNumber($auth[0]['telephonenumber'][0]);
+            //$this->entity->setPhoneNumber($auth[0]['phonenumber'][0]);
             
             return $this; 
        } else {
