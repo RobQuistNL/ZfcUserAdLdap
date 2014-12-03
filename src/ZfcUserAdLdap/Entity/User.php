@@ -9,8 +9,144 @@
  */
 namespace ZfcUserAdLdap\Entity;
 
-use ZfcUser\Entity\User as ZfcUserEntity;
+use ZfcUser\Entity\User as ZfcUserAdEntity;
 
-class User extends ZfcUserEntity {
+class User extends ZfcUserAdEntity {
+	/**
+	 * @var string
+	 */
+	protected $phoneNumber;
+	
+	/**
+	 * @var string
+	 */
+	protected $firstName;
+	
+	/**
+	 * @var string
+	 */
+	protected $lastName;
+	
+	/**
+	 * @var string
+	 */
+	protected $lastLogin;
+	
+	/**
+	 * @var string
+	 */
+	protected $isAdmin;
+	
+	/**
+	 * @var string
+	 */
+	protected $lastIp;
 
+	/**
+	 * Get phone number.
+	 *
+	 * @return string
+	 */
+	public function getPhoneNumber()
+	{
+		return $this->phoneNumber;
+	}
+	
+	/**
+	 * Set phone number.
+	 *
+	 * @param string $phoneNumber
+	 * @return UserInterface
+	 */
+	public function setPhoneNumber($phoneNumber)
+	{
+		$this->phoneNumber = $phoneNumber;
+		return $this;
+	}
+	
+	/**
+	 * Get first name.
+	 *
+	 * @return string
+	 */
+	public function getFirstName()
+	{
+		return $this->firstName;
+	}
+	
+	/**
+	 * Set first name.
+	 *
+	 * @param string $firstName
+	 * @return UserInterface
+	 */
+	public function setFirstName($firstName)
+	{
+		$this->firstName = $firstName;
+		return $this;
+	}
+	
+	/**
+	 * Get last name.
+	 *
+	 * @return string
+	 */
+	public function getLastName()
+	{
+		return $this->lastName;
+	}
+	
+	/**
+	 * Set last name.
+	 *
+	 * @param string $lastName
+	 * @return UserInterface
+	 */
+	public function setLastName($lastName)
+	{
+		$this->lastName = $lastName;
+		return $this;
+	}
+	
+	/**
+	 * Get last login time.
+	 *
+	 * @return string
+	 */
+	public function getLoginTime()
+	{
+		return $this->lastLogin;
+	}
+	
+	/**
+	 * Set last login time.
+	 *
+	 * @param string $lastLogin
+	 * @return UserInterface
+	 */
+	public function setLoginTime($lastLogin)
+	{
+		$this->lastLogin = $lastLogin;
+		return $this;
+	}
+
+	/**
+	 * Get last login ip.
+	 *
+	 * @return string
+	 */
+	public function getLastIp() {
+		return $this->lastIp;
+	}
+
+	/**
+	 * Set last login ip.
+	 *
+	 * @param string $lastIp
+	 * @return UserInterface
+	 */
+	public function setLastIp($lastIp) {
+		$this->lastIp = $lastIp;
+		return $this;
+	}
 }

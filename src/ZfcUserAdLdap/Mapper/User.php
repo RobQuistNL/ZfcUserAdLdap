@@ -81,19 +81,21 @@ class User extends ZfcUserMapper
     public function authenticate($identity,$credential){
         $auth = $this->ldap->authenticate($identity, $credential);
         if ($auth !== FALSE) { //If the login iformation is correct
-            $this->entity->setDisplayName($auth[0]['displayname'][0]);
-            
+            $this->entity->setId($auth[0]['objectsid'][0]);
+			$this->entity->setUsername($auth[0]['samaccountname'][0]);
+			$this->entity->setDisplayName($auth[0]['displayname'][0]);
+			$this->entity->setFirstName($auth[0]['givenName'][0]);
+			$this->entity->setLastName($auth[0]['sn'][0]);
             //@TODO Make the mail domain configurable
             if (isset($auth[0]['mail'][0])) {
                 $mail_exp = explode('.', $auth[0]['mail'][0]);
             } else {
-                $mail_exp[0] = 'enrise';
+                $mail_exp[0] = 'trendshift';
                 $mail_exp[1] = 'com';
             }
             $this->entity->setEmail($auth[0]['samaccountname'][0] . '@' . $mail_exp[count($mail_exp)-2] . '.' . $mail_exp[count($mail_exp)-1]);
-            
-            $this->entity->setId($auth[0]['objectsid'][0]);
-            $this->entity->setUsername($auth[0]['samaccountname'][0]);
+            $this->entity->setPhoneNumber($auth[0]['mobile'][0]);
+			
             return $this; 
        } else {
            return false;
@@ -102,6 +104,7 @@ class User extends ZfcUserMapper
 
     /**
      * @see \ZfcUser\Mapper\User::insert()
+	 * // TrendShift authentication is using save below.
      */
     public function insert($entity, $tableName = null, HydratorInterface $hydrator = null)
     {
@@ -110,9 +113,22 @@ class User extends ZfcUserMapper
 
     /**
      * @see \ZfcUser\Mapper\User::update()
+	 * // TrendShift authentication is using save below.
      */
     public function update($entity, $where = null, $tableName = null, HydratorInterface $hydrator = null)
     {
         return FALSE;
     }
+	
+	// Checks for inserting or updating based on id.
+	public function save($entity, $where = null, $tableName = null, HydratorInterface $hydrator = null) {
+		if ($this->entity->getId() === null) {
+			$result = $this->insert($this->entity, $this->getTableName(), $this->getHydrator());
+		}
+		else {
+			$where = array('id' => $this->entity->getId());
+			$result = $this->update($this->entity, $where, $this->getTableName(), $this->getHydrator());
+		}
+		return $result;
+	}
 }

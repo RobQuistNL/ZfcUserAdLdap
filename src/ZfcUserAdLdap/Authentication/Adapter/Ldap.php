@@ -84,17 +84,26 @@ class Ldap implements AdapterChain, ServiceManagerAwareInterface {
         if ($userDbMapper->findByUsername($userEntity->getUsername()) === false) {
             //This user has been logged in, but he's not yet in the database.
             //Lets create the original user Entity
-            $userDbObject = new \ZfcUser\Entity\User();
+            $userDbObject = new \ZfcUserAdLdap\Entity\User();
             
             $userDbObject->setUsername($userEntity->getUsername());
             $userDbObject->setEmail($userEntity->getEmail());
             $userDbObject->setDisplayName($userEntity->getDisplayName());
-            $userDbObject->setPassword(''); //Otherwise the query won't work.
-            
-            //And add him
+            //$userDbObject->setPassword(''); //Otherwise the query won't work.
+            $userDbObject->setPassword($userEntity->getPassword());
+			$userDbObject->setPhoneNumber($userEntity->getPhoneNumber());
+			$userDbObject->setFirstName($userEntity->getFirstName());
+			$userDbObject->setLastName($userEntity->getLastName());
+			
+            //And add user
             $userDbMapper->insert($userDbObject, 'user');
         } 
         
+		// Update the login time.
+        $userDbObject->setLoginTime(date('Y-m-d H:i:s', time()));
+		// Insert or update in database.
+		$userDbMapper->save($userDbObject, 'user');
+		
         $this->setSatisfied(true);
         $storage = $this->getStorage()->read();
         $storage['identity'] = $e->getIdentity();

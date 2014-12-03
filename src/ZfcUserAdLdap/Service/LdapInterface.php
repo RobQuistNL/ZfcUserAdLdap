@@ -73,4 +73,11 @@ class LdapInterface {
         return false;
     }
 
+    /**
+     *
+     * @return adLDAP class.
+     */
+    function getAdLdap() {
+    	return $this->adldap;
+    }
 }
