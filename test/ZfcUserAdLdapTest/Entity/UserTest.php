@@ -18,7 +18,7 @@ class UserEntityTest extends \PHPUnit_Framework_TestCase
 	* Verifies initial empty/null state.
 	* 
 	*/
-	public function testAlbumInitialState()
+	public function testUserInitialState()
     {
         $this->assertNull(
             $this->user->getId(),
